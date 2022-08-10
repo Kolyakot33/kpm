@@ -19,13 +19,10 @@ jobs:
         go-version: 1.18
 
     - name: Build for linux 64
-      run: GOARCH=amd64 GOOS=linux go build -v -o kpm
+      run: GOARCH=amd64 GOOS=linux go build -v -o "build/kpm" kpm
     - name: Build for linux arm64
-      run: GOARCH=arm64 GOOS=linux go build -v -o kpm_arm64
-
-    - name: GitHub Upload Release Artifacts
-      uses: Roang-zero1/github-upload-release-artifacts-action@v2.1.0
+      run: GOARCH=arm64 GOOS=linux go build -v -o "build/kpm_arm64" kpm
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v3.1.0
       with:
-        args:
-          - "kpm"
-          - "kpm_arm64"
+        path: "build"
