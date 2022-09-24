@@ -16,9 +16,37 @@ func sendSignal(name string, args ...string) error {
 		println(err.Error())
 		return err
 	}
-	reqList()
 	return nil
 
+}
+
+/*
+func getLogFile(id string) string {
+	client, err := rpc.DialHTTP("tcp", "127.0.0.1:7124")
+	if err != nil {
+		log.Fatal("dialing:", err)
+	}
+	var reply string
+	err = client.Call("KPMD.Log", id, &reply)
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+	return reply
+
+}*/
+
+// Pulls stdout and stderr from a process and returns them as a string.
+func askStdOut(id string) string {
+	client, err := rpc.DialHTTP("tcp", "127.0.0.1:7124")
+	if err != nil {
+		log.Fatal("dialing:", err)
+	}
+	var reply string
+	err = client.Call("KPMD.StdOut", id, &reply)
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+	return reply
 }
 
 func reqList() error {
